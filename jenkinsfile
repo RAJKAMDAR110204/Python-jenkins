@@ -1,0 +1,40 @@
+pipeline {
+    agent any  // Run the pipeline on any available agent
+
+    stages {
+        stage('Check for Python') {
+            steps {
+                script {
+                    // Check if Python is installed
+                    def pythonCheck = sh(script: 'python --version', returnStatus: true)
+                    if (pythonCheck != 0) {
+                        error 'Python is not installed on this system.'
+                    } else {
+                        echo 'Python is installed.'
+                    }
+                }
+            }
+        }
+
+        stage('Run Python Script') {
+            steps {
+                script {
+                    // Run the Python script
+                    sh 'python hello.py'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline completed.'
+        }
+        success {
+            echo 'Python script ran successfully.'
+        }
+        failure {
+            echo 'There was a problem running the Python script.'
+        }
+    }
+}
