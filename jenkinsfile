@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     // Check if Python is installed
-                    def pythonCheck = sh(script: 'python --version', returnStatus: true)
+                    def pythonCheck = sh(script: 'python3 --version', returnStatus: true)
                     if (pythonCheck != 0) {
                         error 'Python is not installed on this system.'
                     } else {
@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script {
                     // Run the Python script
-                    sh 'python hello.py'
+                    sh 'python3 hello.py'
                 }
             }
         }
